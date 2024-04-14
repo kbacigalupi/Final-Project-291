@@ -32,5 +32,7 @@ us |>
 ```
 
 ```{r}
-ggplot2::ggplot(aes(x = E_OZONE, y = EP_ASTHMA))
+library(ggplot2)
+ggplot(aes(x = E_OZONE, y = EP_ASTHMA), data = us) + 
+  geom_point()
 ```
