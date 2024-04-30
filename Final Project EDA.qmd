@@ -41,3 +41,34 @@ ggplot(data = us, aes(x = E_OZONE, y = EP_ASTHMA)) +
   labs(title = "EDA Visual #2", x = "Mean Days Above Ozone Standard", y = "Percentage with Asthma") + 
   theme_minimal()
 ```
+### Formatting Equations
+
+\begin{equation}\label{eq:donner-logit}
+\log(\frac{\hat{\pi}}{1 - \hat{\pi}}) = \beta_0 + \beta_1(age_i) + \beta_2(sex_i) + \beta_3(age_i)(sex_i) + \beta_4(age^2_i) + \beta_5(age^2_i)(sex_i)
+\end{equation}
+
+Then can reference equation \ref{eq:donner-logit})
+(no reference number with * after equation/equation)
+
+New line with \\, &'s are where the lines go
+
+\begin{align*}
+\log(\frac{\hat{\pi}}{1 - \hat{\pi}}) = &\beta_0 + \beta_1(age_i) + \beta_2(sex_i) + \beta_3(age_i)(sex_i)\\
+&+ \beta_4(age^2_i) + \beta_5(age^2_i)(sex_i)
+\end{align*}
+
+Then can reference equations as well:  (\ref{eq:donner-logit})
+
+To make curly braces and or parenthsis large: 
+
+\begin{align*}
+\log\left(\frac{\hat{\pi}}{1 - \hat{\pi}}\right) = &\beta_0 + \beta_1(age_i) + \beta_2(sex_i) + \beta_3(age_i)(sex_i)\\
+&+ \beta_4(age^2_i) + \beta_5(age^2_i)(sex_i)
+\end{align*}
+
+Curly braces: 
+
+\begin{align*}
+\log\left\{\frac{\hat{\pi}}{1 - \hat{\pi}}\right\} = &\beta_0 + \beta_1(age_i) + \beta_2(sex_i) + \beta_3(age_i)(sex_i)\\
+&+ \beta_4(age^2_i) + \beta_5(age^2_i)(sex_i)
+\end{align*} 
