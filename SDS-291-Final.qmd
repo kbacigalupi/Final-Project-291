@@ -1,0 +1,134 @@
+---
+title: ""
+format: pdf
+editor: visual
+---
+
+• Is each included table (including table captions) fully unpacked and interpreted for the reader? (0–2 points)
+• Is each included figure (including figure captions) fully unpacked and
+interpreted for the reader? (0–2 points)
+
+## **Abstract**
+
+-   Is the abstract of the appropriate length (i.e., five to six sentences)? (0–1
+    points)
+
+-   Does it provide a succinct description of the study background/
+    motivation, primary research question, and regression methods used?
+    (0–2 points)
+
+-    Does it provide a succinct and specific explanation of what the analyses
+    revealed and how these results inform the broader research question?
+    (0–2 points)
+
+## Introduction
+
+-    Is the topic of the final report clearly explained and some justification/
+    motivation for the analysis provided? Is the relevance of the analysis
+    clearly articulated? (0–3 points)
+
+-    Is the organization of the background and significance logical and structured to flow from the general to the specific? (0–2 points)
+
+-    Are the research question and goals of the analysis clearly explained? Is
+    the final paragraph of the introduction a brief description of the hypothesis and goals of the paper? (0–3 points)
+
+-   Does the introduction include (at least) 2–3 citations to previous research
+    in the area to support your ideas, show what has already been done, and
+    illustrate what gap you are filling? (0–2 points)
+
+Which pollutants correspond with higher rates of asthma in Massachusetts? Does this differ by poverty rates?
+
+## Methods
+
+### Data and Analysis Variables
+
+• Is the broader population of interest (i.e., the target of statistical inference) clearly identified? (0–1 point)
+• Is the source of the data clearly explained, with a corresponding citation?
+How was this sample collected? (0–1 points)
+• Are the response and explanatory variables of interest clearly identified
+and described, with levels (for categorical variables) and appropriate
+units (for continuous variables) provided? (0–1 points)
+• Are any important data wrangling steps (e.g., removing observations
+with missing values, constructing new variables) clearly described? (0–1
+points)
+
+### Statistical Methodology
+
+Are the statistical methods and modeling approach appropriate and logical? Are they motivated by the research question and exploratory data
+analysis? (0–5 points)
+• Are these methods described succinctly and in sufficient detail that someone knowledgeable could replicate the analysis and evaluate the analytic
+decisions made? (0–2 points)
+• Is the mathematical representation of the final population regression
+model(s) provided without errors? (0–2 points)
+• Is the notation used for the outcome and explanatory variable(s) in this
+model clearly and succinctly defined? (0–1 points)
+• Is the approach for addressing missing data (if present) briefly described?
+(0–1 points)
+
+## Results
+
+EDA
+
+-   Are the number of observations in the final analysis dataset (and the
+    number of observations removed from analysis) clearly identified? (0–1
+    points)
+
+-   Are the distributions of the response and relevant explanatory variables,
+    as well as the relationships between them, clearly and accurately described? Using appropriate summary statistics and at least one data
+    visualization? (0–4 points)
+
+### Regression Analysis & Other Statistical Results
+
+• Are the estimates of the model parameters and their accompanying standard errors provided? (0–2 points)
+• Are the relevant estimated slopes, population means, hypothesis tests,
+and/or predictions (as appropriate for the stated research question and
+goals) correctly interpreted in context? (0–8 points)
+• Are confidence/prediction intervals provided for each of these interpreted
+quantities? (0–2 points)
+• Are the final results of the analysis logical and explained in a clear and
+straightforward manner? Are these results clearly tied back to the research question and goals? (0–3 points)
+• Are the regression assumptions and model goodness-of-fit investigated
+and appropriately assessed? These items may be included in the Data
+Analysis Appendix rather than the body of the final report. (0–4 points)
+
+0.007462 no response rate, perform list wise deletion before selecting random census tracks from Massachusetts
+
+```{r, echo = FALSE}
+library(dplyr)
+set.seed(5)
+
+us <- read.csv("United States.csv") |>
+  dplyr::filter(StateDesc == "Massachusetts") |>
+  dplyr::filter(!is.na(E_OZONE & E_PM & E_DSLPM & EP_ASTHMA & EP_POV200)) |>
+  sample_n(300)
+```
+
+```{r}
+us |>
+  dplyr::select(E_OZONE, E_PM, E_DSLPM, EP_POV200) |>
+  GGally::ggpairs()
+```
+
+```{r}
+library(ggplot2)
+ggplot(aes(x = EP_ASTHMA), data = us) + 
+  geom_density()
+
+ggplot(aes(x = log(EP_ASTHMA)), data = us) + 
+  geom_density()
+
+```
+
+```{r}
+asthma1 <- lm(log(EP_ASTHMA) ~ E_OZONE + E_PM + E_DSLPM + EP_POV200, data = us)
+summary(asthma1)
+```
+
+```{r}
+asthma.interact <- lm(log(EP_ASTHMA) ~ E_OZONE*EP_POV200 + E_PM*EP_POV200 + E_DSLPM*EP_POV200, data = us)
+summary(asthma.interact)
+```
+
+```{r}
+anova(asthma1, asthma.interact)
+```
