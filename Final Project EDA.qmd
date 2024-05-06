@@ -23,12 +23,15 @@ Our response variable will be the percentage of individuals that have asthma (EP
 
 ```{r}
 us <- read.csv("United States.csv") |>
-  dplyr::filter(StateDesc == "Massachusetts") |>
-  dplyr::filter(!is.na(E_OZONE & E_PM & E_DSLPM & EP_ASTHMA & EP_POV200))
+  dplyr::filter(StateDesc == "Massachusetts") 
+
+mass |>
+  dplyr::filter(!is.na(E_OZONE & E_PM & E_DSLPM & EP_ASTHMA & EP_POV200)) |>
+  dplyr::select(E_OZONE, E_PM, E_DSLPM, EP_POV200, EP_ASTHMA)
 
 ```
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, message = HIDE}
 us |>
   dplyr::select(E_OZONE, E_PM, E_DSLPM, EP_POV200) |>
   GGally::ggpairs()
