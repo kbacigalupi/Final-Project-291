@@ -64,9 +64,9 @@ out[2,1] <- paste0(sum(cold$WestAfrica), " (",  mean(cold$WestAfrica)*100, "\\%)
 out[2,2] <- paste0(sum(neutral$WestAfrica), " (", mean(neutral$WestAfrica)*100, "\\%)")
 out[2, 3] <- paste0(sum(warm$WestAfrica), " (",  mean(warm$WestAfrica)*100 ,")\\%")
 
-out[3,1] <- paste0(sum(cold$WestAfrica), " (",  1 - mean(cold$WestAfrica)*100, "\\%)")
-out[3,2] <- paste0(sum(neutral$WestAfrica), " (",1 -  mean(neutral$WestAfrica)*100, "\\%)")
-out[3, 3] <- paste0(sum(warm$WestAfrica), " (",  1 - mean(warm$WestAfrica)*100 ,")\\%")
+out[3,1] <- paste0(16 - sum(cold$WestAfrica), " (",  1 - mean(cold$WestAfrica)*100, "\\%)")
+out[3,2] <- paste0(16 - sum(neutral$WestAfrica), " (",1 -  mean(neutral$WestAfrica)*100, "\\%)")
+out[3, 3] <- paste0(16 -sum(warm$WestAfrica), " (",  1 - mean(warm$WestAfrica)*100 ,")\\%")
 
 
 
